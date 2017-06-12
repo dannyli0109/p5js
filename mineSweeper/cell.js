@@ -10,6 +10,7 @@ function Cell(i, j, w) {
 
   this.revealed = false;
   this.neighbour = 0;
+  this.flagged = false;
 }
 
 Cell.prototype.show = function() {
@@ -29,10 +30,18 @@ Cell.prototype.show = function() {
       rect(this.x, this.y, this.w, this.w)
       if (this.neighbour > 0){
         fill(0)
-        text(this.neighbour,this.x + this.w /2 - 3, this.y + this.w / 2 + 4)
+        textAlign(CENTER,CENTER)
+        text(this.neighbour,this.x + this.w /2, this.y + this.w / 2)
       }
 
     }
+  } else {
+    if (this.flagged) {
+      fill(255,0,0)
+      triangle(this.x + this.w * 0.3, this.y + this.w * 0.2,this.x + this.w * 0.3,this.y + this.w * 0.5,this.x + this.w * 0.8,this.y + this.w * 0.5)
+      rect(this.x + this.w * 0.3-0.5, this.y + this.w * 0.5, 0,this.w * 0.3)
+    }
+
   }
 }
 
@@ -90,4 +99,9 @@ Cell.prototype.contains = function(x, y) {
     y > this.y &&
     y < (this.y + this.w)
   )
+}
+
+
+Cell.prototype.flag = function() {
+  this.flagged = !this.flagged
 }
